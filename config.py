@@ -1,6 +1,8 @@
-from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import logging
+from fake_useragent import UserAgent
+import undetected_chromedriver as webdriver
+import random
 
 
 def setup_logging():
@@ -11,15 +13,24 @@ def setup_logging():
 
 def get_webdriver(headless=True):
     chrome_options = Options()
+    ua = UserAgent()
+    user_agent = ua.random
+
     if headless:
         chrome_options.add_argument("--headless")
-        chrome_options.add_argument("user-agent=Mozilla/5.0 \
-            (Windows NT 10.0; Win64; x64) \
-            AppleWebKit/537.36 (KHTML, like Gecko) \
-            Chrome/91.0.4472.124 Safari/537.36")
-        chrome_options.add_argument("--window-size=1920,1080")
-    chrome_options.add_experimental_option('excludeSwitches', 
-                                           ['enable-logging'])
+
+    chrome_options.add_argument(f"--user-agent={user_agent}")
+    chrome_options.add_argument("--use_subprocess")
+
     driver = webdriver.Chrome(options=chrome_options)
+
+    min_width, max_width = 800, 1401
+    min_height, max_height = 600, 801
+    random_width = random.randint(min_width, max_width)
+    random_height = random.randint(min_height, max_height)
+
+    driver.set_window_size(random_width, random_height)
+
     driver.implicitly_wait(2)
+
     return driver

@@ -17,10 +17,10 @@ def scrape_grind75():
         # Raises HTTPError if request returns unsuccessful status code
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
-        logging.error(f"HTTP Error: {e}")
+        logging.error(colored(f"HTTP Error: {e}", "red"))
         exit()
     except requests.exceptions.RequestException as e:
-        logging.error(f"Error fetching URL: {e}")
+        logging.error(colored(f"Error fetching URL: {e}", "red"))
         exit()
 
     html = response.text
@@ -33,17 +33,16 @@ def scrape_grind75():
                 problem_dict[problem_name] = problem_link
 
     except Exception as e:
-        logging.error(f"Error while parsing HTML: {e}")
+        logging.error(colored(f"Error while parsing HTML: {e}", "red"))
         exit()
 
     if len(problem_dict) == 0:
-        logging.error(f"No links were scraped from the target url: {url}")
+        logging.error(colored(f"No links were scraped from the \
+            target url: {url}", "red"))
         exit()
 
     print(
         colored(
             f"Successfully scraped {len(problem_dict)} Grind 75 problems.",
-            "green"
-        )
-    )
+            "green"))
     return problem_dict

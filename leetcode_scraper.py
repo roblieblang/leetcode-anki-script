@@ -10,14 +10,25 @@ import logging
 from termcolor import colored
 
 
+def check_for_captcha(driver):
+    try:
+        driver.find_element(By.CLASS_NAME, "error-message__27FL")
+        return True
+    except NoSuchElementException:
+        return False
+    
+
 def login_to_leetcode(driver, username, password):
     # Wait for page to load
     WebDriverWait(driver, 10).until(
-        expected_conditions.presence_of_element_located((By.ID, "id_login")))
+        expected_conditions.presence_of_element_located((By.ID, "id_login"))
+    )
     WebDriverWait(driver, 10).until(
-        expected_conditions.presence_of_element_located((By.ID, "id_password")))
+        expected_conditions.presence_of_element_located((By.ID, "id_password"))
+    )
     WebDriverWait(driver, 10).until(
-        expected_conditions.presence_of_element_located((By.ID, "signin_btn")))
+        expected_conditions.presence_of_element_located((By.ID, "signin_btn"))
+    )
 
     # Log in
     username_field = driver.find_element(By.ID, "id_login")
@@ -26,50 +37,65 @@ def login_to_leetcode(driver, username, password):
     password_field.send_keys(password)
 
     login_button = WebDriverWait(driver, 10).until(
-        expected_conditions.element_to_be_clickable((By.ID, "signin_btn")))
-    time.sleep(2)  # Consider using a more reliable wait here
+        expected_conditions.element_to_be_clickable((By.ID, "signin_btn"))
+    )
     login_button.click()
-    
+    time.sleep(5)
+    if check_for_captcha(driver):
+        print(colored(
+            "CAPTCHA detected. Solve the CAPTCHA and"
+            "then press ENTER in your terminal to continue."
+            " Do not click the login button!", 
+            "yellow"))
+        input()  
+        login_button.click()
+
 
 def navigate_to_profile(driver):
     profile_icon = WebDriverWait(driver, 10).until(
         expected_conditions.element_to_be_clickable(
-            (By.ID, "headlessui-menu-button-5")))
+            (By.ID, "headlessui-menu-button-5"))
+    )
     profile_icon.click()
 
     list_section = WebDriverWait(driver, 10).until(
         expected_conditions.element_to_be_clickable(
-            (By.CSS_SELECTOR, "a[href='/list/']")))
+            (By.CSS_SELECTOR, "a[href='/list/']")
+        )
+    )
     list_section.click()
 
     # Switch to the new tab
     window_handles = driver.window_handles
     driver.switch_to.window(window_handles[1])
-    
-    
+
+
 def extract_problems_from_list(driver):
     problem_dict = {}
-    
+
     WebDriverWait(driver, 10).until(
         expected_conditions.presence_of_element_located(
-            (By.CLASS_NAME, "mylist-panel")))
+            (By.CLASS_NAME, "mylist-panel"))
+    )
 
     WebDriverWait(driver, 10).until(
         expected_conditions.visibility_of_element_located(
-            (By.CLASS_NAME, "list-group")))
-    
+            (By.CLASS_NAME, "list-group"))
+    )
+
     list_items = driver.find_elements(
-        By.CSS_SELECTOR, ".list-group-item:not(.session-select)")
+        By.CSS_SELECTOR, ".list-group-item:not(.session-select)"
+    )
 
     for item in list_items:
         driver.execute_script("arguments[0].scrollIntoView();", item)
         item.click()
-        
+
         # Find all problems for the current list
         problems = driver.find_elements(By.CSS_SELECTOR, ".question-title a")
-        
+
         for problem in problems:
-            # Extract the question link and title
+            # Extract the question link and name
             problem_link = problem.get_attribute("href").split("?")[0]
             problem_name = problem.get_attribute("innerText").strip()
             problem_dict[problem_name] = problem_link
@@ -78,9 +104,7 @@ def extract_problems_from_list(driver):
 
 
 # Driver function
-def scrape_leetcode():    
-    config.setup_logging()
-
+def scrape_leetcode():
     driver = config.get_webdriver(headless=False)
     url = "https://leetcode.com/accounts/login/"
 
@@ -88,13 +112,17 @@ def scrape_leetcode():
     load_dotenv(".env")
     username = os.environ.get("LEETCODE_USERNAME")
     password = os.environ.get("LEETCODE_PASSWORD")
-    
+
     print(colored("Scraping LeetCode...", "blue"))
     try:
         # Check for properly set username and password
         if not username or not password:
             logging.error(
-                "Username and/or password not set in environment variables."
+                colored(
+                    "Username and/or password not set \
+                in environment variables.",
+                    "red",
+                )
             )
             return {}
 
@@ -102,20 +130,18 @@ def scrape_leetcode():
         login_to_leetcode(driver, username, password)
         navigate_to_profile(driver)
         problem_dict = extract_problems_from_list(driver)
-                
+
     except NoSuchElementException:
-        logging.error("Element not found.")
+        logging.error(colored("Element not found.", "red"))
     except TimeoutException:
-        logging.error("Request timed out.")
+        logging.error(colored("Request timed out.", "red"))
 
     finally:
         driver.quit()
-    
+
     print(
-        colored(
-            f"Successfully scraped {len(problem_dict)} LeetCode problems.",
-            "green"
-        )
+        colored(f"Successfully scraped {len(problem_dict)} LeetCode problems.",
+                "green")
     )
     return problem_dict
 

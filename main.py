@@ -1,27 +1,31 @@
-"""
-Card Structure:
-* anki supports html *
-Front:
-    f"<a href={problem_link}>{problem_name}</a>"
-Back (or maybe all of this should go on the front?):
-    <h2>Instructions:</h2>
-        - Click on problem link and try to solve the problem
-            - Submission accepted: click "Easy" and move on
-            - Submission rejected:
-                - You're totally clueless: read the solution and bury the Card
-                - You failed after trying to code the correct pattern: read the solution and click "Hard"
-                - Your solution is almost right, but you missed a small detail: read the solution and click "Good"          
-"""
-
 import neetcode_scraper
 import leetcode_scraper
 import grind75_scraper
+
+from anki_connect import create_new_deck, add_cards_to_deck, deck_exists
+from config import setup_logging
 
 from termcolor import colored
 import logging
 
 
 def main():
+    setup_logging()
+
+    new_deck_name = "LeetCode Mastery"
+
+    if deck_exists(new_deck_name):
+        print(
+            colored(
+                f"Deck '{new_deck_name}' already exists. "
+                f"Try a different deck name or "
+                f"delete '{new_deck_name}' from Anki.",
+                "red",
+                attrs=["bold"],
+            )
+        )
+        return
+
     all_problems = {}
 
     try:
@@ -40,11 +44,25 @@ def main():
 
     except Exception as e:
         logging.error(colored(f"An error occurred: {e}", "red"))
+        raise e
 
     print(
         colored(
-            f"Successfully scraped {len(all_problems)} unique problems:", 
-            "magenta", attrs=["bold"]
+            f"Successfully scraped {len(all_problems)} unique problems.",
+            "magenta",
+            attrs=["bold"],
+        )
+    )
+
+    print(colored(f"Creating a new Anki deck '{new_deck_name}'...", "cyan"))
+    create_new_deck(new_deck_name)
+    print(colored(f"Adding all problems to '{new_deck_name}' deck...", "cyan"))
+    cards = add_cards_to_deck(new_deck_name, all_problems)
+    print(
+        colored(
+            f"{cards} cards added to '{new_deck_name}'.",
+            "light_green",
+            attrs=["bold", "underline"],
         )
     )
 

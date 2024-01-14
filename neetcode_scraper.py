@@ -8,8 +8,6 @@ from termcolor import colored
 
 
 def scrape_neetcode():
-    config.setup_logging()
-
     driver = config.get_webdriver(headless=True)
 
     url = "https://neetcode.io/practice"
@@ -19,10 +17,8 @@ def scrape_neetcode():
     print(colored("Scraping NeetCode...", "blue"))
     try:
         # Click NeetCode 150 tab
-        nc_150_xpath_locator = (
-            "//*[contains(text(), '🚀') and "
-            "contains(text(), 'NeetCode 150')]" 
-        )
+        nc_150_xpath_locator = "//*[contains(text(), '🚀') and \
+            contains(text(), 'NeetCode 150')]"
         nc_150_tab = driver.find_element(By.XPATH, nc_150_xpath_locator)
         nc_150_tab.click()
 
@@ -36,25 +32,22 @@ def scrape_neetcode():
             )
         )
 
-        for element in driver.find_elements(
-            By.CSS_SELECTOR, "a.table-text.text-color"
-        ):
+        for element in driver.find_elements(By.CSS_SELECTOR, 
+                                            "a.table-text.text-color"):
             problem_name = element.get_attribute("innerText").strip()
             problem_link = element.get_attribute("href")
             problem_dict[problem_name] = problem_link
 
     except NoSuchElementException:
-        logging.error("Element not found.")
+        logging.error(colored("Element not found.", "red"))
     except TimeoutException:
-        logging.error("Request timed out.")
+        logging.error(colored("Request timed out.", "red"))
 
     finally:
         driver.quit()
 
     print(
-        colored(
-            f"Successfully scraped {len(problem_dict)} NeetCode problems.",
-            "green"
-        )
+        colored(f"Successfully scraped {len(problem_dict)} NeetCode problems.", 
+                "green")
     )
     return problem_dict

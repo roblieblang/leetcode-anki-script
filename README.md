@@ -24,12 +24,12 @@ The purpose of this tool is not to memorize exact LeetCode problems, but instead
 
 ## Example Ouput
 
+![example output](https://github.com/roblieblang/leetcode-anki-script/blob/main/images/output1.png?raw=true)
+![example output](https://github.com/roblieblang/leetcode-anki-script/blob/main/images/output2.png?raw=true)
 
 ## Troubleshooting
 
-- LeetCode Cloudflare Block and LeetCode CAPTCHA
-  - Login to LeetCode manually with the same credentials and then try running the script again
-- Duplicate Anki Cards
+- Duplicate Anki Cards Error
   - Delete the deck containing the duplicates and try again
 - OSError upon finishing script execution
   - Comment out `time.sleep(0.1)` on line 798 of `venv\Lib\site-packages\undetected_chromedriver\__init__.py`

@@ -24,8 +24,8 @@ def get_webdriver(headless=True):
 
     driver = webdriver.Chrome(options=chrome_options)
 
-    min_width, max_width = 800, 1401
-    min_height, max_height = 600, 801
+    min_width, max_width = 900, 1401
+    min_height, max_height = 700, 801
     random_width = random.randint(min_width, max_width)
     random_height = random.randint(min_height, max_height)
 

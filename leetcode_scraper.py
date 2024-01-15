@@ -71,6 +71,8 @@ def navigate_to_profile(driver):
 
 
 def extract_problems_from_list(driver):
+    # {problem_link: problem_name}
+    # since there are duplicate names with different casing
     problem_dict = {}
 
     WebDriverWait(driver, 10).until(
@@ -96,9 +98,10 @@ def extract_problems_from_list(driver):
 
         for problem in problems:
             # Extract the question link and name
-            problem_link = problem.get_attribute("href").split("?")[0]
+            problem_link = \
+                problem.get_attribute("href").split("?")[0].rstrip('/')
             problem_name = problem.get_attribute("innerText").strip()
-            problem_dict[problem_name] = problem_link
+            problem_dict[problem_link] = problem_name
 
     return problem_dict
 
@@ -147,4 +150,6 @@ def scrape_leetcode():
 
 
 if __name__ == "__main__":
-    scrape_leetcode()
+    res = scrape_leetcode()
+    for link, name in res.items():
+        print(f"{name}: {link}")

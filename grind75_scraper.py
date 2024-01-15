@@ -10,6 +10,8 @@ def scrape_grind75():
         "15&weeks=20&grouping=topics&mode=all"
     )
 
+    # {problem_link: problem_name}
+    # since there are duplicate names with different casing
     problem_dict = {}
     print(colored("Scraping Grind 75...", "blue"))
     try:
@@ -30,7 +32,7 @@ def scrape_grind75():
             if "/problems" in link["href"]:
                 problem_link = link["href"]
                 problem_name = link.text
-                problem_dict[problem_name] = problem_link
+                problem_dict[problem_link] = problem_name
 
     except Exception as e:
         logging.error(colored(f"Error while parsing HTML: {e}", "red"))
@@ -46,3 +48,9 @@ def scrape_grind75():
             f"Successfully scraped {len(problem_dict)} Grind 75 problems.",
             "green"))
     return problem_dict
+
+
+if __name__ == "__main__":
+    res = scrape_grind75()
+    for link, name in res.items():
+        print(f"{name}: {link}")

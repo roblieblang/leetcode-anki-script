@@ -13,6 +13,8 @@ def scrape_neetcode():
     url = "https://neetcode.io/practice"
     driver.get(url)
 
+    # {problem_link: problem_name}
+    # since there are duplicate names with different casing
     problem_dict = {}
     print(colored("Scraping NeetCode...", "blue"))
     try:
@@ -35,8 +37,8 @@ def scrape_neetcode():
         for element in driver.find_elements(By.CSS_SELECTOR, 
                                             "a.table-text.text-color"):
             problem_name = element.get_attribute("innerText").strip()
-            problem_link = element.get_attribute("href")
-            problem_dict[problem_name] = problem_link
+            problem_link = element.get_attribute("href").rstrip('/')
+            problem_dict[problem_link] = problem_name
 
     except NoSuchElementException:
         logging.error(colored("Element not found.", "red"))
@@ -51,3 +53,9 @@ def scrape_neetcode():
                 "green")
     )
     return problem_dict
+
+
+if __name__ == "__main__":
+    res = scrape_neetcode()
+    for link, name in res.items():
+        print(f"{name}: {link}")

@@ -33,9 +33,9 @@ def create_new_deck(deck_name):
     print(colored(f"All decks: {invoke('deckNames')}", "dark_grey"))
 
 
-def add_cards_to_deck(deck_name, problem_dict):
+def add_cards_to_deck(deck_name, problems):
     count = 0
-    for problem_name, problem_link in problem_dict.items():
+    for problem_link, problem_name in problems:
         html_content = f"""
             <div style="text-align: center;">
                 <h2>

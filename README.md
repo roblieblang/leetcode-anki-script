@@ -24,6 +24,7 @@ The purpose of this tool is not to memorize exact LeetCode problems, but instead
 
 ## Last Tested
 
+This script was last tested on 1/16/24 with the following configurations:
 * Anki Version: 23.12.1 (1a1d4d54)⁩
 * AnkiConnect Version: 6
 * Python Version: 3.11.5

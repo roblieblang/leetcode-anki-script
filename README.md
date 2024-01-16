@@ -22,6 +22,16 @@ The purpose of this tool is not to memorize exact LeetCode problems, but instead
 * Start Anki (it must be running in order for the script to work)
 * Run the script with `python main.py` from a CLI in the root directory of the project
 
+## Last Tested
+
+* Anki Version: 23.12.1 (1a1d4d54)⁩
+* AnkiConnect Version: 6
+* Python Version: 3.11.5
+* Operating System: Windows 11, Version 22H2, OS Build 22621.3007
+* Google Chrome Version: 120.0.6099.217 (Official Build) (64-bit)
+  
+Please note that while the script has been tested with these versions, newer versions of Anki or other dependencies may affect the script's functionality.
+
 ## Example Ouput
 
 ![example output](https://github.com/roblieblang/leetcode-anki-script/blob/main/images/output1.png?raw=true)

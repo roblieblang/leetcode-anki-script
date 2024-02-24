@@ -1,6 +1,6 @@
 ## About
 
-Inspired by this [Reddit post](https://www.reddit.com/r/leetcode/comments/ywm91m/using_anki_and_spaced_repetition_with_leetcode/), I made a simple script to scrape LeetCode problem links from some of the most popular problem sets and add them to an Anki deck. Anki serves as a scheduler for this stuyd strategy, deciding for the user when to revisit problems based on their perceived difficulty.
+Inspired by this [Reddit post](https://www.reddit.com/r/leetcode/comments/ywm91m/using_anki_and_spaced_repetition_with_leetcode/), I made a Python program to scrape LeetCode problem links from some of the most popular problem sets and add them to an Anki deck. Anki serves as a scheduler for this stuyd strategy, deciding for the user when to revisit problems based on their perceived difficulty.
 
 There are thousands of LeetCode problems available to solve, but these curated lists are commonly considered to cover the most fundamental techniques, strategies, patterns, data structures and algorithms.
 
@@ -20,7 +20,7 @@ The purpose of this tool is not to memorize exact LeetCode problems, but instead
 * Create a new Python virtual environment and activate it
 * Create a `.env` following the `.env.example` in the root directory of the project
 * Start Anki (it must be running in order for the script to work)
-* Run the script with `python main.py` from a CLI in the root directory of the project
+* Run the program with `python main.py` from a CLI in the root directory of the project
 
 ## Last Tested
 
@@ -31,7 +31,7 @@ This script was last tested on 1/16/24 with the following configurations:
 * Operating System: Windows 11, Version 22H2, OS Build 22621.3007
 * Google Chrome Version: 120.0.6099.217 (Official Build) (64-bit)
   
-Please note that while the script has been tested with these versions, newer versions of Anki or other dependencies may affect the script's functionality.
+Please note that while the code has been tested with these versions, newer versions of Anki or other dependencies may affect its functionality.
 
 ## Example Ouput
 
@@ -42,9 +42,9 @@ Please note that while the script has been tested with these versions, newer ver
 
 - Duplicate Anki Cards Error
   - Delete the deck containing the duplicates and try again
-- OSError upon finishing script execution
+- OSError upon finishing program execution
   - Comment out `time.sleep(0.1)` on line 798 of `venv\Lib\site-packages\undetected_chromedriver\__init__.py`
 
 ## Disclaimer
 
-I am not responsible for any misuse of this script. Please respect the websites and their terms.
+I am not responsible for any misuse of this code. Please respect the websites and their terms.

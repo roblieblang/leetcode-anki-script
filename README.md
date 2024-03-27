@@ -1,10 +1,10 @@
 ## About
 
-Inspired by this [Reddit post](https://www.reddit.com/r/leetcode/comments/ywm91m/using_anki_and_spaced_repetition_with_leetcode/), I made a Python program to scrape LeetCode problem links from some of the most popular problem sets and add them to an Anki deck. Anki serves as a scheduler for this stuyd strategy, deciding for the user when to revisit problems based on their perceived difficulty.
+Inspired by this [Reddit post](https://www.reddit.com/r/leetcode/comments/ywm91m/using_anki_and_spaced_repetition_with_leetcode/), I made a Python program to scrape LeetCode problem links from some of the most popular problem sets and add them to an Anki deck. Anki serves as a scheduler for this study strategy, deciding for the user when to revisit problems based on their perceived difficulty.
 
 There are thousands of LeetCode problems available to solve, but these curated lists are commonly considered to cover the most fundamental techniques, strategies, patterns, data structures and algorithms.
 
-The purpose of this tool is not to memorize exact LeetCode problems, but instead to devote most of one's study time to weak areas, while also tracking your progress through Anki's native capabilities.
+The purpose of this tool is not to memorize exact LeetCode solutions, but instead to devote most of one's study time to weak areas, while also tracking your progress through Anki's native capabilities.
 
 ## Requirements
 

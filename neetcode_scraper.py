@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import config
 import logging
@@ -8,7 +8,7 @@ from termcolor import colored
 
 
 def scrape_neetcode():
-    driver = config.get_webdriver(headless=True)
+    driver = config.get_webdriver(headless=False)
 
     url = "https://neetcode.io/practice"
     driver.get(url)
@@ -25,15 +25,14 @@ def scrape_neetcode():
         nc_150_tab.click()
 
         # Wait for table to load
-        nc_150_table_xpath_locator = (
-            "//app-pattern-table-list[@class='ng-star-inserted']"
-        )
-        WebDriverWait(driver, 10).until(
-            expected_conditions.presence_of_element_located(
-                (By.XPATH, nc_150_table_xpath_locator)
-            )
-        )
-
+        # nc_150_table_xpath_locator = (
+        #     "//app-pattern-table-list[@class='ng-star-inserted']"
+        # )
+        # WebDriverWait(driver, 50).until(
+        #     expected_conditions.presence_of_element_located(
+        #         (By.XPATH, nc_150_table_xpath_locator)
+        #     )
+        # )
         for element in driver.find_elements(By.CSS_SELECTOR, 
                                             "a.table-text.text-color"):
             problem_name = element.get_attribute("innerText").strip()

@@ -20,11 +20,14 @@ The purpose of this tool is not to memorize exact LeetCode solutions, but instea
 * Create a new Python virtual environment and activate it
 * Create a `.env` following the `.env.example` in the root directory of the project
 * Start Anki (it must be running in order for the script to work)
-* Run the program with `python main.py` from a CLI in the root directory of the project
+* Create Python virtual environment with `python -m venv venv`
+* Activate Python virtual environment with `.\venv\Scripts\activate`
+* Install dependencies with `pip install -r .\requirements.txt`
+* Run the program using command `python main.py` from a CLI in the root directory of the project
 
 ## Last Tested
 
-This script was last tested on 1/16/24 with the following configurations:
+This script was last tested on 4/13/24 with the following configurations:
 * Anki Version: 23.12.1 (1a1d4d54)⁩
 * AnkiConnect Version: 6
 * Python Version: 3.11.5
